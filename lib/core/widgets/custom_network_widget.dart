@@ -14,7 +14,7 @@ class CustomNetworkWidget extends StatelessWidget {
         imageUrl ?? '',
         fit: BoxFit.cover,
         errorBuilder: (context, error, stackTrace) {
-          debugPrint('Image loading issue --> $imageUrl ----> ${error.toString()}',);
+          // debugPrint('Image loading issue --> $imageUrl ----> ${error.toString()}',);
           return Container(
             color: Colors.grey[300],
             child: Center(child: Icon(Icons.error_outline)),

@@ -26,7 +26,12 @@ class DashboardProvider with ChangeNotifier {
   Future<void> fetchAllDataForDashboard() async {
     _categoryStateModel.isLoading = true;
     _productsStateModel.isLoading = true;
+    getCategories();
+    getProducts();
     notifyListeners();
+  }
+
+  getCategories() async {
     var categoryCall = await _appRepository.getCategories();
     categoryCall.fold(
       (onError) {
@@ -37,7 +42,9 @@ class DashboardProvider with ChangeNotifier {
         notifyStates(isCategory: true, isSuccess: true);
       },
     );
+  }
 
+  getProducts() async {
     var productCall = await _appRepository.getProducts();
     productCall.fold(
       (onError) {

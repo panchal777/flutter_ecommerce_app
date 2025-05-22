@@ -4,4 +4,6 @@ class AppStrings {
   static const products = 'Products';
   static const similarProducts = 'Similar Products';
   static const billDetails = 'Bill Details';
+
+  static const String productDetail = 'Product Details';
 }

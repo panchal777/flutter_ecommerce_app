@@ -49,8 +49,7 @@ Please refer the below video to understand the app
 
 ## 📸 Demo Video
 
-[![Watch the video - Ecommerce App](https://drive.google.com/file/d/1aloJoGMwp4msgrJizYolNhJaOUuniV9J/view?usp=drive_link)
-
+▶️ [Watch the Demo Video on Google Drive](https://drive.google.com/file/d/1aloJoGMwp4msgrJizYolNhJaOUuniV9J/view?usp=sharing)
 
 
 

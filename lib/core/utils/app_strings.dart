@@ -1,0 +1,7 @@
+class AppStrings {
+  static const dashboardTitle = 'Sharpsell Store';
+  static const categories = 'Categories';
+  static const products = 'Products';
+  static const similarProducts = 'Similar Products';
+  static const billDetails = 'Bill Details';
+}

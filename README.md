@@ -1,16 +1,58 @@
-# flutter_ecommerce_app
+# 🛍️ Flutter E-Commerce App
 
-A new Flutter project.
+A Flutter application showcasing an E-commerce platform with features like categories, product listings, product details, add-to-cart functionality, similar product views, and integrated search.
 
-## Getting Started
+## 🚀 Getting Started
 
-This project is a starting point for a Flutter application.
+Follow the steps below to set up and run the project locally:
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+flutter clean
+flutter pub get
+flutter packages pub run build_runner build
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Features
+
+- Dashboard (Categories, Products)
+- Product Details
+- Add to Cart
+- Products with Search 
+- Home Search 
+
+This project architecture uses MVVM Architecture pattern with Provider
+
+- data (Data layer logic)
+- domain (Interact/Business Logic)
+- presentation (UI/Views/State management)
+
+## Folder Structure
+
+
+```text
+lib/
+├── core/               # Core utilities and global helpers
+│   ├── error_handling/ # Error models and handling logic
+│   ├── retrofit/       # Network layer using Retrofit
+│   ├── routes/         # App route configuration
+│   ├── utils/          # Utility functions and constants
+│   └── widgets/        # Reusable UI widgets
+├── features/           # Feature modules
+│   ├── data/           # Data layer (models, API, repositories)
+│   ├── domain/         # Business logic and use cases
+│   └── presentation/   # UI, views, and view models
+└── main.dart           # App entry point
+```
+
+Please refer the below video to understand the app
+
+## 📸 Demo Video
+
+[![Watch the video - Ecommerce App](https://drive.google.com/file/d/1aloJoGMwp4msgrJizYolNhJaOUuniV9J/view?usp=drive_link)
+
+
+
+
+
+

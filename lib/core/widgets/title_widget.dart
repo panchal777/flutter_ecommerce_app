@@ -13,3 +13,17 @@ class TitleWidget extends StatelessWidget {
     );
   }
 }
+
+class BodyWidget extends StatelessWidget {
+  final String label;
+
+  const BodyWidget({super.key, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      label,
+      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+    );
+  }
+}

@@ -14,12 +14,14 @@ class ProductListWidget extends StatelessWidget {
   final bool isStateLoading;
   final List<ProductModel> productList;
   final bool showProgress;
+  final Map addToCart;
 
   const ProductListWidget({
     super.key,
     required this.productList,
     required this.isStateLoading,
     required this.showProgress,
+    required this.addToCart,
   });
 
   @override
@@ -31,7 +33,7 @@ class ProductListWidget extends StatelessWidget {
         isStateLoading
             ? _buildShimmerList()
             : productList.isEmpty
-            ? Center(child: NoRecordFound().withPadding(EdgeInsets.all(8)))
+            ? NoRecordFound()
             : _products(context),
       ],
     );
@@ -54,6 +56,8 @@ class ProductListWidget extends StatelessWidget {
           ),
           itemBuilder: (_, index) {
             var data = productList[index];
+            data.isSelected = addToCart.containsKey(data.id.toString());
+
             return GestureDetector(
               onTap: () {
                 context.pushNamed(RouteName.productDetails, extra: data);

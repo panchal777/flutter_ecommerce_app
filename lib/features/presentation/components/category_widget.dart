@@ -24,50 +24,54 @@ class CategoryWidget extends StatelessWidget {
             value.categoryStateModel.isLoading
                 ? _buildShimmerList()
                 : value.categories.isEmpty
-                ? Center(child: NoRecordFound().withPadding(EdgeInsets.all(8)))
-                : categories(value.categories),
+                ? NoRecordFound()
+                : categories(value.categories, context),
           ],
         );
       },
     );
   }
 
-  Widget categories(List<CategoryModel> categories) {
+  Widget categories(List<CategoryModel> categories, BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.only(left: 10, top: 10),
+      padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
       child: Row(
         children: List.generate(categories.length, (index) {
           var data = categories[index];
 
           return Padding(
             padding: const EdgeInsets.only(right: 8.0),
-            child: SizedBox(
-              // color: Colors.blueGrey,
-              width: 120,
-              height: 150,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: SizedBox(
-                      width: 110,
-                      child: CustomNetworkWidget(imageUrl: data.image),
+            child: Card(
+              child: SizedBox(
+                // color: Colors.blueGrey,
+                width: 120,
+                height: MediaQuery.of(context).size.height * .20,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Center(
+                        child: SizedBox(
+                          width: 120,
+                          child: CustomNetworkWidget(imageUrl: data.image),
+                        ),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                  Expanded(
-                    flex: 1,
-                    child: Text(
-                      (data.name ?? '').capitalizeFirst(),
-                      textAlign: TextAlign.start,
-                      style: const TextStyle(overflow: TextOverflow.ellipsis),
-                      maxLines: 2,
+                    const SizedBox(height: 5),
+                    Expanded(
+                      flex: 1,
+                      child: Text(
+                        (data.name ?? '').capitalizeFirst(),
+                        textAlign: TextAlign.start,
+                        style: const TextStyle(overflow: TextOverflow.ellipsis),
+                        maxLines: 2,
+                      ).withPadding(EdgeInsets.all(8)),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );

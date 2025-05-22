@@ -9,6 +9,7 @@ class ProductModel {
     required this.images,
     required this.creationAt,
     required this.updatedAt,
+    this.isSelected = false,
   });
 
   final int? id;
@@ -20,6 +21,8 @@ class ProductModel {
   final List<String> images;
   final DateTime? creationAt;
   final DateTime? updatedAt;
+
+  bool isSelected = false;
 
   ProductModel copyWith({
     int? id,

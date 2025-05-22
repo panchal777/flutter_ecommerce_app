@@ -6,4 +6,6 @@ class AppStrings {
   static const billDetails = 'Bill Details';
 
   static const String productDetail = 'Product Details';
+
+  static const String addToCart = 'Add to Cart';
 }

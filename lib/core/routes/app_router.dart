@@ -6,7 +6,8 @@ import 'package:flutter_ecommerce_app/features/presentation/screens/dashboard/da
 import 'package:flutter_ecommerce_app/features/presentation/screens/product_detail/product_detail_screen.dart';
 import 'package:flutter_ecommerce_app/features/presentation/viewmodels/dashboard_provider.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart' show ChangeNotifierProvider;
+import 'package:provider/provider.dart'
+    show ChangeNotifierProvider, MultiProvider;
 
 import '../../features/presentation/screens/initial/splash_screen.dart';
 import '../../features/presentation/viewmodels/product_provider.dart';
@@ -46,8 +47,12 @@ class AppRouter {
       name: RouteName.dashboard,
       path: RouteName.dashboard,
       builder: (context, state) {
-        return ChangeNotifierProvider(
-          create: (context) => DashboardProvider()..fetchAllDataForDashboard(),
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (_) => DashboardProvider()..fetchAllDataForDashboard(),
+            ),
+          ],
           child: DashboardScreen(),
         );
       },

@@ -13,11 +13,13 @@ import '../../../core/widgets/title_widget.dart';
 class ProductListWidget extends StatelessWidget {
   final bool isStateLoading;
   final List<ProductModel> productList;
+  final bool showProgress;
 
   const ProductListWidget({
     super.key,
     required this.productList,
     required this.isStateLoading,
+    required this.showProgress,
   });
 
   @override
@@ -36,26 +38,37 @@ class ProductListWidget extends StatelessWidget {
   }
 
   Widget _products(BuildContext context) {
-    return GridView.builder(
-      shrinkWrap: true,
-      padding: EdgeInsets.all(10),
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: productList.length,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 0.75,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-      ),
-      itemBuilder: (_, index) {
-        var data = productList[index];
-        return GestureDetector(
-          onTap: () {
-            context.pushNamed(RouteName.productDetails, extra: data);
+    return Column(
+      children: [
+        GridView.builder(
+          controller: null,
+          shrinkWrap: true,
+          padding: EdgeInsets.all(10),
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: productList.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 0.65,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 2,
+          ),
+          itemBuilder: (_, index) {
+            var data = productList[index];
+            return GestureDetector(
+              onTap: () {
+                context.pushNamed(RouteName.productDetails, extra: data);
+              },
+              child: ProductListCard(productModel: data),
+            );
           },
-          child: ProductListCard(productModel: data),
-        );
-      },
+        ),
+        // Optional loader
+        if (showProgress)
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: CircularProgressIndicator(),
+          ),
+      ],
     );
   }
 

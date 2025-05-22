@@ -4,9 +4,9 @@ import '../models/category_model.dart';
 
 abstract class AppLocalSrc {
   //dashboard
-  Future<List<CategoryModel>> getCategories();
+  Future<List<CategoryModel>> getCategories(int limit);
 
-  Future<List<ProductModel>> getProducts();
+  Future<List<ProductModel>> getProducts(int limit, int offset);
 
   //product details
   Future<ProductModel> getProductById(int productId);

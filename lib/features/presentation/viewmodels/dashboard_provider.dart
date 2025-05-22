@@ -15,6 +15,8 @@ class DashboardProvider with ChangeNotifier {
   StateModel _categoryStateModel = StateModel();
   StateModel _productsStateModel = StateModel();
 
+  Pagination p = Pagination(limit: 10, offset: 0);
+
   List<CategoryModel> get categories => _categories;
 
   List<ProductModel> get products => _products;
@@ -32,7 +34,7 @@ class DashboardProvider with ChangeNotifier {
   }
 
   getCategories() async {
-    var categoryCall = await _appRepository.getCategories();
+    var categoryCall = await _appRepository.getCategories(10);
     categoryCall.fold(
       (onError) {
         notifyStates(isCategory: true, isError: true, msg: onError.toString());
@@ -45,16 +47,39 @@ class DashboardProvider with ChangeNotifier {
   }
 
   getProducts() async {
-    var productCall = await _appRepository.getProducts();
+    var productCall = await _appRepository.getProducts(p.limit, p.offset);
     productCall.fold(
       (onError) {
-        notifyStates(isCategory: false, isError: true, msg: onError.toString());
+        notifyStates(
+          isCategory: false,
+          isError: true,
+          msg: onError.toString(),
+          showProgress: false,
+        );
       },
       (list) {
-        _products = list;
-        notifyStates(isCategory: false, isSuccess: true);
+        updateCountsForProducts(list);
+        notifyStates(isCategory: false, isSuccess: true, showProgress: false);
       },
     );
+  }
+
+  updateCountsForProducts(List<ProductModel> list) {
+    debugPrint(
+      'products '
+      '---> offset ${p.offset}'
+      '----> limit ${p.limit} ',
+    );
+    p.offset = p.offset + p.limit;
+    p.hasMore = list.length == p.limit;
+    _products.addAll(list);
+    debugPrint('fetched products ----> ${_products.length}');
+  }
+
+  fetchMoreProducts() {
+    productsStateModel.showProgress = true;
+    notifyListeners();
+    getProducts();
   }
 
   notifyStates({

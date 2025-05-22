@@ -6,9 +6,9 @@ import '../../data/models/product_model.dart' show ProductModel;
 
 abstract class AppRepository {
   //dashboard
-  Future<Either<Failure, List<CategoryModel>>> getCategories();
+  Future<Either<Failure, List<CategoryModel>>> getCategories(int limit);
 
-  Future<Either<Failure, List<ProductModel>>> getProducts();
+  Future<Either<Failure, List<ProductModel>>> getProducts(int limit, int offset);
 
   //product details
   Future<Either<Failure, ProductModel>> getProductById(int productId);

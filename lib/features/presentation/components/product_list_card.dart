@@ -12,45 +12,54 @@ class ProductListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // color: Colors.blueGrey,
-      child: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Flexible(
-                child: Center(
+    return Card(
+      child: Container(
+        // color: Colors.blueGrey,
+        child: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 2,
                   child: CustomNetworkWidget(
                     imageUrl: productModel.images.isNotEmpty
                         ? productModel.images[0]
                         : '',
                   ),
                 ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text((productModel.title ?? '').capitalizeFirst()),
-                  Text('\$${productModel.price}'),
-                ],
-              ).withPadding(EdgeInsets.only(left: 8, top: 5)),
-            ],
-          ),
-          Positioned(
-            top: 8,
-            right: 8,
-            child: Container(
-              padding: const EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(),
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: const Icon(Icons.add, size: 16),
+                Expanded(
+                  flex: 1,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        (productModel.title ?? '').capitalizeFirst(),
+                        textAlign: TextAlign.start,
+                        style: const TextStyle(overflow: TextOverflow.ellipsis),
+                        maxLines: 2,
+                      ),
+                      Text('\$${productModel.price}'),
+                    ],
+                  ).withPadding(EdgeInsets.only(left: 8, top: 5)),
+                ),
+              ],
             ),
-          ),
-        ],
+            Positioned(
+              top: 1,
+              right: 1,
+              child: Container(
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: const Icon(Icons.add, size: 16),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -13,3 +13,17 @@ class StateModel {
     this.msg = '',
   });
 }
+
+class Pagination {
+  int limit;
+  int offset;
+  int page;
+  bool hasMore;
+
+  Pagination({
+    this.limit = 5,
+    this.offset = 0,
+    this.page = 1,
+    this.hasMore = true,
+  });
+}

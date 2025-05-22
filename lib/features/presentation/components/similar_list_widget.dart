@@ -42,9 +42,9 @@ class SimilarListWidget extends StatelessWidget {
         children: List.generate(similarList.length, (index) {
           var data = similarList[index];
           return Container(
-            padding: EdgeInsets.all(5),
-            height: 200,
-            width: 200,
+            margin: EdgeInsets.all(5),
+            height: 250,
+            width: 150,
             child: ProductListCard(productModel: data),
           );
         }),

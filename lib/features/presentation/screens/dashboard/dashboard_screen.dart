@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce_app/core/routes/route_name.dart';
 import 'package:flutter_ecommerce_app/core/utils/app_extensions.dart';
@@ -11,8 +10,36 @@ import 'package:provider/provider.dart';
 
 import '../../components/product_list_widget.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  final ScrollController _parentScrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    final provider = Provider.of<DashboardProvider>(context, listen: false);
+
+    _parentScrollController.addListener(() {
+      if (_parentScrollController.position.pixels >=
+              _parentScrollController.position.maxScrollExtent &&
+          !provider.productsStateModel.showProgress &&
+          provider.p.hasMore) {
+        provider.fetchMoreProducts();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _parentScrollController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +57,7 @@ class DashboardScreen extends StatelessWidget {
           ],
         ),
         body: SingleChildScrollView(
+          controller: _parentScrollController,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -45,6 +73,7 @@ class DashboardScreen extends StatelessWidget {
                   return ProductListWidget(
                     isStateLoading: value.productsStateModel.isLoading,
                     productList: value.products,
+                    showProgress: value.productsStateModel.showProgress,
                   );
                 },
               ),

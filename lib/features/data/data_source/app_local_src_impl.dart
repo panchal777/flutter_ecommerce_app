@@ -14,14 +14,14 @@ class AppLocalSrcImpl extends AppLocalSrc {
   }
 
   @override
-  Future<List<CategoryModel>> getCategories() async {
-    var list = await restClient.fetchCategories(10);
+  Future<List<CategoryModel>> getCategories(int limit) async {
+    var list = await restClient.fetchCategories(limit);
     return list;
   }
 
   @override
-  Future<List<ProductModel>> getProducts() async {
-    var list = await restClient.fetchProducts(10, 0);
+  Future<List<ProductModel>> getProducts(int limit, int offset) async {
+    var list = await restClient.fetchProducts(limit, offset);
     return list;
   }
 

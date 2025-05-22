@@ -14,7 +14,6 @@ class ProductDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(AppStrings.productDetail)),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -31,46 +30,55 @@ class ProductDetailScreen extends StatelessWidget {
     return Consumer<ProductProvider>(
       builder: (context, value, child) {
         var productModel = value.productModel;
-        return Column(
-          children: [
-            // Main Product Image
-            AspectRatio(
-              aspectRatio: 1.5,
-              child: Container(
-                color: Colors.grey[300],
-                child: Center(
-                  child: CustomNetworkWidget(imageUrl: productModel?.images[0]),
+        return Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              // Main Product Image
+              AspectRatio(
+                aspectRatio: 1.5,
+                child: Container(
+                  color: Colors.grey[300],
+                  child: Center(
+                    child: CustomNetworkWidget(
+                      imageUrl: productModel?.images[0],
+                    ),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 15),
-            // Category, Add Button and Description
-            Container(
-              padding: const EdgeInsets.all(12),
-              color: Colors.grey[200],
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text((productModel?.category?.name ?? '').capitalizeFirst()),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        (productModel?.title ?? '').capitalizeFirst(),
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+              const SizedBox(height: 15),
+              // Category, Add Button and Description
+              Container(
+                padding: const EdgeInsets.all(12),
+                color: Colors.grey[200],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      (productModel?.category?.name ?? '').capitalizeFirst(),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            (productModel?.title ?? '').capitalizeFirst(),
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                      ),
-                      ElevatedButton(onPressed: () {}, child: Text("Add")),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Text(productModel?.description ?? 'Description'),
-                ],
+                        ElevatedButton(onPressed: () {}, child: Text("Add")),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Text(productModel?.description ?? 'Description'),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

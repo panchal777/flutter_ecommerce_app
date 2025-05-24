@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce_app/core/routes/route_name.dart';
 import 'package:flutter_ecommerce_app/core/utils/app_extensions.dart';
 import 'package:flutter_ecommerce_app/core/utils/app_strings.dart';
-import 'package:flutter_ecommerce_app/core/widgets/custom_network_widget.dart';
+import 'package:flutter_ecommerce_app/core/widgets/image_carousel_with_dots.dart';
 import 'package:flutter_ecommerce_app/features/presentation/components/similar_list_widget.dart';
 import 'package:flutter_ecommerce_app/features/presentation/viewmodels/product_provider.dart';
 import 'package:go_router/go_router.dart';
@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../core/widgets/title_widget.dart';
 import '../../../data/models/product_model.dart';
+import '../../components/add_to_cart/cart_app_bar_icon.dart';
 import '../../viewmodels/add_to_cart_provider.dart';
 
 class ProductDetailScreen extends StatelessWidget {
@@ -18,7 +19,10 @@ class ProductDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppStrings.productDetail)),
+      appBar: AppBar(
+        title: Text(AppStrings.productDetail),
+        actions: [CartAppBarIcon()],
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,13 +46,12 @@ class ProductDetailScreen extends StatelessWidget {
             children: [
               // Main Product Image
               AspectRatio(
-                aspectRatio: 1.5,
+                aspectRatio: 1.3,
                 child: Container(
                   color: Colors.grey[300],
-                  child: Center(
-                    child: CustomNetworkWidget(
-                      imageUrl: productModel?.images[0],
-                    ),
+                  child: ImageCarouselWithDots(
+                    imageUrls: productModel!.images,
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),
@@ -61,14 +64,14 @@ class ProductDetailScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      (productModel?.category?.name ?? '').capitalizeFirst(),
+                      (productModel.category?.name ?? '').capitalizeFirst(),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Flexible(
                           child: Text(
-                            (productModel?.title ?? '').capitalizeFirst(),
+                            (productModel.title ?? '').capitalizeFirst(),
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -84,7 +87,7 @@ class ProductDetailScreen extends StatelessWidget {
                             }
                           },
                           child: Text(
-                            productModel!.isSelected ? "Remove" : "Add",
+                            productModel.isSelected ? "Remove" : "Add",
                             style: TextStyle(
                               color: productModel.isSelected
                                   ? Colors.red

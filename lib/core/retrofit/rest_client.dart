@@ -30,5 +30,9 @@ abstract class RestClient {
 
   /*product list*/
   @GET("/categories/{id}/products")
-  Future<List<ProductModel>> getProductListByCatId(@Path("id") int id);
+  Future<List<ProductModel>> getProductListByCatId(
+    @Path("id") int id,
+    @Query("limit") int limit,
+    @Query("offset") int offset,
+  );
 }

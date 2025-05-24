@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce_app/core/routes/route_name.dart';
 import 'package:flutter_ecommerce_app/core/utils/app_extensions.dart';
 import 'package:flutter_ecommerce_app/features/data/models/category_model.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart' show Consumer;
 import 'package:shimmer/shimmer.dart' show Shimmer;
 
@@ -42,35 +44,42 @@ class CategoryWidget extends StatelessWidget {
 
           return Padding(
             padding: const EdgeInsets.only(right: 8.0),
-            child: Card(
-              child: SizedBox(
-                // color: Colors.blueGrey,
-                width: 120,
-                height: MediaQuery.of(context).size.height * .20,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Center(
-                        child: SizedBox(
-                          width: 120,
-                          child: CustomNetworkWidget(imageUrl: data.image),
+            child: GestureDetector(
+              onTap: () {
+                navigateToProducts(data, context);
+              },
+              child: Card(
+                child: SizedBox(
+                  // color: Colors.blueGrey,
+                  width: 120,
+                  height: MediaQuery.of(context).size.height * .20,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Center(
+                          child: SizedBox(
+                            width: 120,
+                            child: CustomNetworkWidget(imageUrl: data.image),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 5),
-                    Expanded(
-                      flex: 1,
-                      child: Text(
-                        (data.name ?? '').capitalizeFirst(),
-                        textAlign: TextAlign.start,
-                        style: const TextStyle(overflow: TextOverflow.ellipsis),
-                        maxLines: 2,
-                      ).withPadding(EdgeInsets.all(8)),
-                    ),
-                  ],
+                      const SizedBox(height: 5),
+                      Expanded(
+                        flex: 1,
+                        child: Text(
+                          (data.name ?? '').capitalizeFirst(),
+                          textAlign: TextAlign.start,
+                          style: const TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          maxLines: 2,
+                        ).withPadding(EdgeInsets.all(8)),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -115,5 +124,9 @@ class CategoryWidget extends StatelessWidget {
         }).toList(),
       ),
     );
+  }
+
+  navigateToProducts(CategoryModel catModel, BuildContext context) {
+    context.pushNamed(RouteName.productList, extra: catModel);
   }
 }

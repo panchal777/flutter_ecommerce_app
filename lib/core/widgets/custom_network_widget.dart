@@ -4,7 +4,7 @@ class CustomNetworkWidget extends StatelessWidget {
   final String? imageUrl;
   final double? height;
   final double? width;
-  final BoxFit fit;
+  final BoxFit? fit;
   final BorderRadius borderRadius;
 
   const CustomNetworkWidget({

@@ -49,7 +49,7 @@ Please refer the below video to understand the app
 
 ## 📸 Demo Video
 
-▶️ [Watch the Demo Video on Google Drive](https://drive.google.com/file/d/1aloJoGMwp4msgrJizYolNhJaOUuniV9J/view?usp=sharing)
+▶️ [Watch the Demo Video on Google Drive](https://drive.google.com/file/d/1waF2odeD0FqJf2Dlk_Pfh4sZqHRWxkmM/view?usp=drive_link)
 
 
 

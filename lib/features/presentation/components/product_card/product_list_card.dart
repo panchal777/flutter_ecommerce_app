@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce_app/core/utils/app_extensions.dart';
-import 'package:flutter_ecommerce_app/features/data/models/product_model.dart';
+import 'package:flutter_ecommerce_app/core/utils/app_extensions.dart';import 'package:flutter_ecommerce_app/features/data/models/product_model.dart';
 import 'package:provider/provider.dart' show Provider;
 import '../../viewmodels/add_to_cart_provider.dart';
 import '../../../../core/widgets/image_carousel_with_dots.dart';
@@ -22,7 +21,9 @@ class ProductListCard extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 2,
-                  child: ImageCarouselWithDots(imageUrls: productModel.images),
+                  child: ImageCarouselWithDots(
+                    imageUrls: productModel.images,
+                  ),
                 ),
                 Expanded(
                   flex: 1,
@@ -32,7 +33,9 @@ class ProductListCard extends StatelessWidget {
                       Text(
                         (productModel.title ?? '').capitalizeFirst(),
                         textAlign: TextAlign.start,
-                        style: const TextStyle(overflow: TextOverflow.ellipsis),
+                        style: const TextStyle(
+                          overflow: TextOverflow.ellipsis,
+                        ),
                         maxLines: 2,
                       ),
                       Text('\$${productModel.price}'),

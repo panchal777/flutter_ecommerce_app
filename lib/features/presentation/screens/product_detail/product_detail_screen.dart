@@ -8,6 +8,7 @@ import 'package:flutter_ecommerce_app/features/presentation/viewmodels/product_p
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/title_widget.dart';
 import '../../../data/models/product_model.dart';
 import '../../components/add_to_cart/cart_app_bar_icon.dart';
@@ -18,19 +19,21 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppStrings.productDetail),
-        actions: [CartAppBarIcon()],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            bindProductDetailsCard(),
-            const SizedBox(height: 15),
-            SimilarListWidget(),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBar(
+          title: AppStrings.productDetail,
+          actions: [CartAppBarIcon()],
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              bindProductDetailsCard(),
+              const SizedBox(height: 15),
+              SimilarListWidget(),
+            ],
+          ),
         ),
       ),
     );
@@ -63,9 +66,7 @@ class ProductDetailScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      (productModel.category?.name ?? '').capitalizeFirst(),
-                    ),
+                    Text((productModel.category?.name ?? '').capitalizeFirst()),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

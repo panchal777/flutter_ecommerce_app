@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce_app/core/routes/route_name.dart';
 import 'package:flutter_ecommerce_app/core/utils/app_extensions.dart';
+import 'package:flutter_ecommerce_app/core/utils/common.dart';
 import 'package:flutter_ecommerce_app/features/data/models/category_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart' show Consumer;
@@ -23,7 +24,7 @@ class CategoryWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TitleWidget(title: AppStrings.categories).withOnlyPadding(left: 10),
-            value.categoryStateModel.isLoading
+            value.catUiModel.isLoading
                 ? _buildShimmerList()
                 : value.categories.isEmpty
                 ? NoRecordFound()
@@ -49,7 +50,7 @@ class CategoryWidget extends StatelessWidget {
                 navigateToProducts(data, context);
               },
               child: Card(
-                child: SizedBox(
+                child: Container(
                   // color: Colors.blueGrey,
                   width: 120,
                   height: MediaQuery.of(context).size.height * .20,
@@ -59,11 +60,9 @@ class CategoryWidget extends StatelessWidget {
                     children: [
                       Expanded(
                         flex: 2,
-                        child: Center(
-                          child: SizedBox(
-                            width: 120,
-                            child: CustomNetworkWidget(imageUrl: data.image),
-                          ),
+                        child: SizedBox(
+                          width: 120,
+                          child: CustomNetworkWidget(imageUrl: data.image),
                         ),
                       ),
                       const SizedBox(height: 5),
@@ -127,6 +126,7 @@ class CategoryWidget extends StatelessWidget {
   }
 
   navigateToProducts(CategoryModel catModel, BuildContext context) {
+    Common.hideKeyboard(context);
     context.pushNamed(RouteName.productList, extra: catModel);
   }
 }

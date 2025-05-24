@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/routes/route_name.dart';
+import '../../../../core/utils/common.dart';
 import '../../viewmodels/add_to_cart_provider.dart' show AddToCartProvider;
 
 class CartAppBarIcon extends StatelessWidget {
@@ -20,6 +21,7 @@ class CartAppBarIcon extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.shopping_cart, size: 28),
               onPressed: () {
+                Common.hideKeyboard(context);
                 context.pushNamed(RouteName.addToCart);
               },
             ),

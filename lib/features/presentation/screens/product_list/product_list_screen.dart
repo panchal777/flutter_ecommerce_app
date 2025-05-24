@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce_app/core/utils/app_extensions.dart';
 import 'package:flutter_ecommerce_app/core/widgets/custom_search_bar.dart';
@@ -6,7 +8,9 @@ import 'package:flutter_ecommerce_app/features/presentation/viewmodels/product_l
 import 'package:provider/provider.dart';
 
 import '../../../../core/utils/app_strings.dart';
+import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/title_widget.dart';
+import '../../components/add_to_cart/cart_app_bar_icon.dart';
 import '../../components/product_grid_list_widget.dart';
 
 class ProductListScreen extends StatefulWidget {
@@ -20,6 +24,7 @@ class ProductListScreen extends StatefulWidget {
 
 class _ProductListScreenState extends State<ProductListScreen> {
   final ScrollController _childScrollController = ScrollController();
+  Timer? _debounce;
 
   @override
   void initState() {
@@ -47,17 +52,17 @@ class _ProductListScreenState extends State<ProductListScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(title: Text(widget.categoryName)),
+        appBar: CustomAppBar(
+          title: widget.categoryName,
+          actions: [CartAppBarIcon()],
+        ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 10),
             CustomSearchBar(
               onChanged: (value) {
-                Provider.of<ProductListProvider>(
-                  context,
-                  listen: false,
-                ).searchFilter(value);
+                searchByProductName(value);
               },
             ).withPadding(const EdgeInsets.all(10)),
             Expanded(
@@ -66,7 +71,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 children: [
                   TitleWidget(
                     title: AppStrings.products,
-                  ).withOnlyPadding(left: 10,bottom: 10),
+                  ).withOnlyPadding(left: 10, bottom: 10),
 
                   Expanded(
                     child: SingleChildScrollView(
@@ -90,5 +95,16 @@ class _ProductListScreenState extends State<ProductListScreen> {
         ),
       ),
     );
+  }
+
+  searchByProductName(String value) {
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    // Set new timer
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      Provider.of<ProductListProvider>(
+        context,
+        listen: false,
+      ).searchFilter(value);
+    });
   }
 }

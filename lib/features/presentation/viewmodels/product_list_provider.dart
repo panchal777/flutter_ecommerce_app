@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_ecommerce_app/core/utils/state_model.dart';
+import 'package:flutter_ecommerce_app/core/utils/ui_model.dart';
 import 'package:flutter_ecommerce_app/features/data/data_source/app_local_src_impl.dart';
 import 'package:flutter_ecommerce_app/features/data/models/product_model.dart';
 import 'package:flutter_ecommerce_app/features/data/repositories/app_repository_impl.dart';
@@ -11,7 +11,7 @@ class ProductListProvider with ChangeNotifier {
   );
   List<ProductModel> _products = [];
   List<ProductModel> displayProducts = [];
-  StateModel uiModel = StateModel();
+  UiModel uiModel = UiModel();
   Pagination p = Pagination(limit: 5, offset: 0);
   int currentCatId = -1;
   bool isSearchFilterApplied = false;
@@ -101,6 +101,6 @@ class ProductListProvider with ChangeNotifier {
   }
 
   setDefaultToFalse() {
-    uiModel = StateModel();
+    uiModel = UiModel();
   }
 }

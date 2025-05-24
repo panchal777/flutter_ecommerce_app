@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_ecommerce_app/core/utils/state_model.dart';
+import 'package:flutter_ecommerce_app/core/utils/ui_model.dart';
 import 'package:flutter_ecommerce_app/features/data/models/product_model.dart';
 
 class AddToCartProvider with ChangeNotifier {
   List<ProductModel> _addToCartList = [];
-  StateModel _stateModel = StateModel();
+  UiModel _stateModel = UiModel();
   String itemTotal = '0';
   String festiveHandlingChargeOld = '10.0';
   String festiveHandlingCharge = '8.90';
@@ -18,7 +18,7 @@ class AddToCartProvider with ChangeNotifier {
   final Map<String, dynamic> addToCardProductMap = {};
 
   //states for loading, success, error
-  StateModel get stateModel => _stateModel;
+  UiModel get stateModel => _stateModel;
 
   addItemToCart(ProductModel model) {
     _addToCartList.add(model);

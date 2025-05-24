@@ -7,6 +7,7 @@ import 'package:flutter_ecommerce_app/features/presentation/components/loading_c
 import 'package:flutter_ecommerce_app/features/presentation/components/product_card/product_list_card.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/utils/common.dart';
 
 class ProductGridListWidget extends StatelessWidget {
   final bool isStateLoading;
@@ -52,7 +53,7 @@ class ProductGridListWidget extends StatelessWidget {
 
             return GestureDetector(
               onTap: () {
-                context.pushNamed(RouteName.productDetails, extra: data);
+                navigateToProductDetails(context, data);
               },
               child: ProductListCard(productModel: data),
             );
@@ -84,5 +85,10 @@ class ProductGridListWidget extends StatelessWidget {
         return SimmerProductCard();
       },
     );
+  }
+
+  navigateToProductDetails(BuildContext context, ProductModel data) {
+    Common.hideKeyboard(context);
+    context.pushNamed(RouteName.productDetails, extra: data);
   }
 }

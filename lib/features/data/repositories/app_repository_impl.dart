@@ -23,9 +23,12 @@ class AppRepositoryImpl extends AppRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductModel>>> getProducts(int limit, int offset) async {
+  Future<Either<Failure, List<ProductModel>>> getProducts(
+    int limit,
+    int offset,
+  ) async {
     try {
-      var response = await localSrc.getProducts(limit,offset);
+      var response = await localSrc.getProducts(limit, offset);
       return Right(response);
     } catch (e, s) {
       Failure error = await checkErrorState(e, s);
@@ -60,9 +63,11 @@ class AppRepositoryImpl extends AppRepository {
   @override
   Future<Either<Failure, List<ProductModel>>> getProductsByCategory(
     int categoryId,
+    int limit,
+    int offset,
   ) async {
     try {
-      var response = await localSrc.getProductsByCategory(categoryId);
+      var response = await localSrc.getProductsByCategory(categoryId,limit,offset);
       return Right(response);
     } catch (e, s) {
       Failure error = await checkErrorState(e, s);

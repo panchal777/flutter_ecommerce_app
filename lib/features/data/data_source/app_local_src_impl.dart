@@ -32,8 +32,16 @@ class AppLocalSrcImpl extends AppLocalSrc {
   }
 
   @override
-  Future<List<ProductModel>> getProductsByCategory(int categoryId) async {
-    var list = await restClient.getProductListByCatId(categoryId);
+  Future<List<ProductModel>> getProductsByCategory(
+    int categoryId,
+    int limit,
+    int offset,
+  ) async {
+    var list = await restClient.getProductListByCatId(
+      categoryId,
+      limit,
+      offset,
+    );
     return list;
   }
 

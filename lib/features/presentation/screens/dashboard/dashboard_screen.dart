@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce_app/core/routes/route_name.dart';
 import 'package:flutter_ecommerce_app/core/utils/app_extensions.dart';
 import 'package:flutter_ecommerce_app/core/utils/app_strings.dart';
 import 'package:flutter_ecommerce_app/core/widgets/custom_search_bar.dart';
 import 'package:flutter_ecommerce_app/features/presentation/components/category_widget.dart';
 import 'package:flutter_ecommerce_app/features/presentation/viewmodels/add_to_cart_provider.dart';
 import 'package:flutter_ecommerce_app/features/presentation/viewmodels/dashboard_provider.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-
-import '../../components/product_list_widget.dart';
+import '../../../../core/widgets/custom_app_bar.dart';
+import '../../../../core/widgets/title_widget.dart';
+import '../../components/add_to_cart/cart_app_bar_icon.dart';
+import '../../components/product_grid_list_widget.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -29,8 +29,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     _parentScrollController.addListener(() {
       if (_parentScrollController.position.pixels >=
               _parentScrollController.position.maxScrollExtent &&
-          !provider.productsStateModel.showProgress &&
-          provider.p.hasMore) {
+          !provider.productUiModel.showProgress &&
+          provider.p.hasMore &&
+          !provider.isSearchFilterApplied) {
         provider.fetchMoreProducts();
       }
     });
@@ -46,51 +47,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(AppStrings.dashboardTitle),
-          actions: [
-            Consumer<AddToCartProvider>(
-              builder: (context, value, child) {
-                int itemCount = value.addToCartList.length;
-
-                return Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.shopping_cart,size: 28,),
-                      onPressed: () {
-                        context.pushNamed(RouteName.addToCart);
-                      },
-                    ),
-                    if (itemCount > 0)
-                      Positioned(
-                        right: 4,
-                        top: 1,
-                        child: Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: const BoxDecoration(
-                            color: Colors.red,
-                            shape: BoxShape.circle,
-                          ),
-                          constraints: const BoxConstraints(
-                            minWidth: 15,
-                            minHeight: 15,
-                          ),
-                          child: Text(
-                            '$itemCount',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                  ],
-                );
-              },
-            ),
-          ],
+        appBar: CustomAppBar(
+          title: AppStrings.dashboardTitle,
+          actions: [CartAppBarIcon()],
+          showBackButton: false,
         ),
         body: SingleChildScrollView(
           controller: _parentScrollController,
@@ -99,18 +59,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
             children: [
               SizedBox(height: 10),
               CustomSearchBar(
-                onChanged: (value) {},
+                onChanged: (value) {
+                  searchByProductName(value);
+                },
               ).withPadding(const EdgeInsets.all(10)),
               SizedBox(height: 10),
               CategoryWidget(),
               SizedBox(height: 10),
               Consumer2<DashboardProvider, AddToCartProvider>(
                 builder: (context, value, value2, child) {
-                  return ProductListWidget(
-                    isStateLoading: value.productsStateModel.isLoading,
-                    productList: value.products,
-                    showProgress: value.productsStateModel.showProgress,
-                    addToCart: value2.addToCardProductMap,
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TitleWidget(
+                        title: AppStrings.products,
+                      ).withOnlyPadding(left: 10, bottom: 10),
+                      ProductGridListWidget(
+                        isStateLoading: value.productUiModel.isLoading,
+                        productList: value.displayProducts,
+                        showProgress: value.productUiModel.showProgress,
+                        addToCart: value2.addToCardProductMap,
+                      ),
+                    ],
                   );
                 },
               ),
@@ -119,5 +89,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       ),
     );
+  }
+
+  searchByProductName(String value) {
+    Provider.of<DashboardProvider>(context, listen: false).searchFilter(value);
   }
 }

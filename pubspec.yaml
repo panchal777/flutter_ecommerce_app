@@ -39,6 +39,7 @@ dependencies:
   go_router: ^15.1.2
   provider: ^6.1.5
   shimmer: ^3.0.0
+  fluttertoast: ^8.2.12
 
 dev_dependencies:
   flutter_test:

@@ -15,5 +15,9 @@ abstract class AppLocalSrc {
 
   //search home
   // product list on clicking category list item
-  Future<List<ProductModel>> getProductsByCategory(int categoryId);
+  Future<List<ProductModel>> getProductsByCategory(
+    int categoryId,
+    int limit,
+    int offset,
+  );
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
     show ElevatedButton, Colors, Divider, Card, Icons;
+import 'package:flutter_ecommerce_app/core/utils/common.dart';
 import 'package:flutter_ecommerce_app/features/presentation/viewmodels/add_to_cart_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -66,7 +67,9 @@ class BillingDetailsWidget extends StatelessWidget {
                   minimumSize: Size(double.infinity, 50),
                   backgroundColor: Colors.black,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Common.toastMessage("Order placed Successfully");
+                },
                 child: Text("Pay", style: TextStyle(color: Colors.white)),
               ),
             ],

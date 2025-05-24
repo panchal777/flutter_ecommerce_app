@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_ecommerce_app/core/utils/state_model.dart';
+import 'package:flutter_ecommerce_app/core/utils/ui_model.dart';
 import 'package:flutter_ecommerce_app/features/data/data_source/app_local_src_impl.dart';
 import 'package:flutter_ecommerce_app/features/data/models/product_model.dart';
 import 'package:flutter_ecommerce_app/features/data/repositories/app_repository_impl.dart';
@@ -12,17 +12,17 @@ class ProductProvider with ChangeNotifier {
   ProductModel? _productModel;
   List<ProductModel> _similarList = [];
 
-  StateModel _productState = StateModel();
-  StateModel _similarListState = StateModel();
+  UiModel _productState = UiModel();
+  UiModel _similarListState = UiModel();
 
   ProductModel? get productModel => _productModel;
 
   List<ProductModel> get similarList => _similarList;
 
   //states for loading, success, error
-  StateModel get productState => _productState;
+  UiModel get productState => _productState;
 
-  StateModel get similarListState => _similarListState;
+  UiModel get similarListState => _similarListState;
 
   Future<void> getProductDetailsScreenData(ProductModel model) async {
     _productState.isLoading = true;
@@ -85,7 +85,7 @@ class ProductProvider with ChangeNotifier {
   }
 
   setDefaultToFalse() {
-    _productState = StateModel();
-    _similarListState = StateModel();
+    _productState = UiModel();
+    _similarListState = UiModel();
   }
 }

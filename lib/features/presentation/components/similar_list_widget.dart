@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce_app/core/utils/app_extensions.dart';
 import 'package:flutter_ecommerce_app/features/data/models/product_model.dart';
-import 'package:flutter_ecommerce_app/features/presentation/components/product_list_card.dart';
+import 'package:flutter_ecommerce_app/features/presentation/components/product_card/product_list_card.dart';
 import 'package:flutter_ecommerce_app/features/presentation/components/loading_cards/simmer_product_card.dart';
 import 'package:flutter_ecommerce_app/features/presentation/viewmodels/add_to_cart_provider.dart';
 import 'package:flutter_ecommerce_app/features/presentation/viewmodels/product_provider.dart';

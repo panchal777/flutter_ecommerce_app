@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_ecommerce_app/core/utils/state_model.dart';
+import 'package:flutter_ecommerce_app/core/utils/ui_model.dart';
 import 'package:flutter_ecommerce_app/features/data/data_source/app_local_src_impl.dart';
 import 'package:flutter_ecommerce_app/features/data/models/category_model.dart';
 import 'package:flutter_ecommerce_app/features/data/models/product_model.dart';
@@ -10,24 +10,33 @@ class DashboardProvider with ChangeNotifier {
   final AppRepository _appRepository = AppRepositoryImpl(
     localSrc: AppLocalSrcImpl(),
   );
+
+  //Setting all list
   List<CategoryModel> _categories = [];
-  List<ProductModel> _products = [];
-  StateModel _categoryStateModel = StateModel();
-  StateModel _productsStateModel = StateModel();
+  List<ProductModel> _products = []; // original list
+  List<ProductModel> _displayProducts = []; //filter and display
 
-  Pagination p = Pagination(limit: 10, offset: 0);
+  // state model to check status, error, success
+  UiModel _catUiModel = UiModel();
+  UiModel _productUiModel = UiModel();
 
+  // getting all values
   List<CategoryModel> get categories => _categories;
 
-  List<ProductModel> get products => _products;
+  List<ProductModel> get displayProducts => _displayProducts;
 
-  StateModel get categoryStateModel => _categoryStateModel;
+  UiModel get catUiModel => _catUiModel;
 
-  StateModel get productsStateModel => _productsStateModel;
+  UiModel get productUiModel => _productUiModel;
+
+  //locals
+  bool isSearchFilterApplied = false;
+  Pagination p = Pagination(limit: 10, offset: 0);
 
   Future<void> fetchAllDataForDashboard() async {
-    _categoryStateModel.isLoading = true;
-    _productsStateModel.isLoading = true;
+    _catUiModel.isLoading = true;
+    _productUiModel.isLoading = true;
+    isSearchFilterApplied = false;
     getCategories();
     getProducts();
     notifyListeners();
@@ -73,13 +82,32 @@ class DashboardProvider with ChangeNotifier {
     p.offset = p.offset + p.limit;
     p.hasMore = list.length == p.limit;
     _products.addAll(list);
+    _displayProducts.addAll(list);
     debugPrint('fetched products ----> ${_products.length}');
   }
 
   fetchMoreProducts() {
-    productsStateModel.showProgress = true;
+    productUiModel.showProgress = true;
     notifyListeners();
     getProducts();
+  }
+
+  searchFilter(String searchText) {
+    if (searchText.isEmpty) {
+      isSearchFilterApplied = false;
+      _displayProducts = List.from(_products);
+    } else {
+      isSearchFilterApplied = true;
+      _displayProducts = _products.where((product) {
+        return (product.title ?? '').toLowerCase().contains(
+          searchText.toLowerCase(),
+        );
+      }).toList();
+
+      debugPrint('search text ----> $searchText');
+      debugPrint('search products ----> ${displayProducts.length}');
+    }
+    notifyListeners();
   }
 
   notifyStates({
@@ -92,30 +120,25 @@ class DashboardProvider with ChangeNotifier {
   }) {
     setDefaultToFalse();
     if (isCategory) {
-      _categoryStateModel.isLoading =
-          isLoading ?? _categoryStateModel.isLoading;
-      _categoryStateModel.isError = isError ?? _categoryStateModel.isError;
-      _categoryStateModel.isSuccess =
-          isSuccess ?? _categoryStateModel.isSuccess;
-      _categoryStateModel.showProgress =
-          showProgress ?? _categoryStateModel.showProgress;
-      _categoryStateModel.msg = msg ?? _categoryStateModel.msg;
+      _catUiModel.isLoading = isLoading ?? _catUiModel.isLoading;
+      _catUiModel.isError = isError ?? _catUiModel.isError;
+      _catUiModel.isSuccess = isSuccess ?? _catUiModel.isSuccess;
+      _catUiModel.showProgress = showProgress ?? _catUiModel.showProgress;
+      _catUiModel.msg = msg ?? _catUiModel.msg;
     } else {
-      _productsStateModel.isLoading =
-          isLoading ?? _productsStateModel.isLoading;
-      _productsStateModel.isError = isError ?? _productsStateModel.isError;
-      _productsStateModel.isSuccess =
-          isSuccess ?? _productsStateModel.isSuccess;
-      _productsStateModel.showProgress =
-          showProgress ?? _productsStateModel.showProgress;
-      _productsStateModel.msg = msg ?? _productsStateModel.msg;
+      _productUiModel.isLoading = isLoading ?? _productUiModel.isLoading;
+      _productUiModel.isError = isError ?? _productUiModel.isError;
+      _productUiModel.isSuccess = isSuccess ?? _productUiModel.isSuccess;
+      _productUiModel.showProgress =
+          showProgress ?? _productUiModel.showProgress;
+      _productUiModel.msg = msg ?? _productUiModel.msg;
     }
 
     notifyListeners();
   }
 
   setDefaultToFalse() {
-    _categoryStateModel = StateModel();
-    _productsStateModel = StateModel();
+    _catUiModel = UiModel();
+    _productUiModel = UiModel();
   }
 }

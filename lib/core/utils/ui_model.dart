@@ -1,11 +1,11 @@
-class StateModel {
+class UiModel {
   bool isLoading;
   bool isError;
   bool isSuccess;
   bool showProgress;
   String msg;
 
-  StateModel({
+  UiModel({
     this.isError = false,
     this.isLoading = false,
     this.showProgress = false,

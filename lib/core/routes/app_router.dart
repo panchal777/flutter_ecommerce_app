@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce_app/core/routes/route_name.dart';
+import 'package:flutter_ecommerce_app/features/data/models/category_model.dart';
 import 'package:flutter_ecommerce_app/features/data/models/product_model.dart';
 import 'package:flutter_ecommerce_app/features/presentation/screens/add_to_cart/add_to_cart_screen.dart';
 import 'package:flutter_ecommerce_app/features/presentation/screens/dashboard/dashboard_screen.dart';
 import 'package:flutter_ecommerce_app/features/presentation/screens/product_detail/product_detail_screen.dart';
+import 'package:flutter_ecommerce_app/features/presentation/screens/product_list/product_list_screen.dart';
 import 'package:flutter_ecommerce_app/features/presentation/viewmodels/dashboard_provider.dart';
+import 'package:flutter_ecommerce_app/features/presentation/viewmodels/product_list_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart'
     show ChangeNotifierProvider, MultiProvider;
@@ -72,6 +75,19 @@ class AppRouter {
           create: (context) =>
               ProductProvider()..getProductDetailsScreenData(productModel),
           child: ProductDetailScreen(),
+        );
+      },
+    ),
+
+    GoRoute(
+      name: RouteName.productList,
+      path: RouteName.productList,
+      builder: (context, state) {
+        final catModel = state.extra as CategoryModel;
+        return ChangeNotifierProvider(
+          create: (context) =>
+              ProductListProvider()..getProductsFromCatId(catModel.id!),
+          child: ProductListScreen(categoryName: catModel.name ?? ''),
         );
       },
     ),

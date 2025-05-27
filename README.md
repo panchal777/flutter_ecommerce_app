@@ -47,6 +47,11 @@ lib/
 
 Please refer the below video to understand the app
 
+
+## 📸 Swagger Api's
+
+https://api.escuelajs.co/docs#/
+
 ## 📸 Demo Video
 
 ▶️ [Watch the Demo Video on Google Drive](https://drive.google.com/file/d/1waF2odeD0FqJf2Dlk_Pfh4sZqHRWxkmM/view?usp=drive_link)
